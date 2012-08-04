@@ -1,5 +1,7 @@
 /* TODO:
  * bug: when the figure is at the lowest row and its footprint covers other figures, when we begin to rotate, that other figure disappears
+ * onkeypress не работает на большом компьютере
+ * когда увеличиваем/уменьшаем картинку, плывет html (счет оказывается слева от канвы)
  * - у некоторых фигурок _очень_ блеклые цвета
  * - timerdelay меньше 200 - нереально, надо как-то плавненько подводить и тормозить на уровне 150-200
  * - можно ли добавить звук?
