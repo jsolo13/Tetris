@@ -37,9 +37,9 @@ var score=-2;
 //Timerdelay
 var timerdelay = 1000;
 var intervalHandle;
-document.onkeyup = key_pressed;
+document.onkeypress = key_pressed;
 // game level
-var level = 1;
+var level = 0;
 // 1 if game is on, 0 if game is over
 var game_on = 1;
 
@@ -74,8 +74,8 @@ function new_game()
 	game_on = 1;
 
 	score = -2;
-	level = 1;
-	update_score();
+	level = 0;
+	update_score(0);
 	var i=0;
 	var wide = (width/piece_size);
 	for(;i<grid.length;i++)
@@ -135,8 +135,7 @@ function do_movement()
 		check_line_full();
 		if(!down(cur_piece))
 		{
-			clearInterval(intervalHandle);
-			alert("game over");
+			game_over();
 		}
 	}
 	grid_draw();
@@ -154,10 +153,9 @@ function drop()
 }
 function random_piece(x, y, id)
 {
+	update_score(1);
+
 	var num = rand_between(0, 7);
-	
-	++score;
-	update_score();
 	switch(num)
 	{
 		case 0:
@@ -486,8 +484,7 @@ function check_line_full()
 	}
 	if(needed)
 	{
-		score += (needed*5);
-		update_score();
+		update_score(needed*5);
 	}
 }
 
@@ -539,7 +536,6 @@ function spin(piece)
 		var j =0;
 		for(;j<temp[i].length;j++)
 		{
-				/*alert("Moving ("+i+","+j+") to ("+(horiz-j)+","+(horiz-i))*/
 			piece.footprint[j][horiz-i] = temp[i][j];
 		}
 	}
@@ -630,21 +626,24 @@ function zig_zag_alt(startx, starty, id)
 	this.footprint[3] = [-1, -1, -1, -1];
 }
 
-function update_score()
+function update_score(val)
 {	
+	score += val;
+	document.getElementById("score").innerHTML = "Score: "+score;
 	if(score/25 >= level)
 	{
-		level++;		
-		if (timerdelay > 400)
-			timerdelay -= 75;
-		else
-			timerdelay -= 50;
-		document.getElementById("debug").innerHTML = "timerdelay: "+timerdelay;
-		clearInterval(intervalHandle);
-		intervalHandle = setInterval("do_movement();", timerdelay);
+		update_level();
 	}
-	document.getElementById("score").innerHTML = "Score: "+score;
+}
+
+function update_level()
+{
+	level++;		
 	document.getElementById("level").innerHTML = "Level: "+level;
+	if (timerdelay > 400)
+		timerdelay -= 75;
+	else
+		timerdelay -= 50;
 }
 
 function game_over()
