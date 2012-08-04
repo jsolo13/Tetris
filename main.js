@@ -1,5 +1,5 @@
 /* TODO:
- * ? если первый ряд снизу не заполнен, а второй и третий - заполнены, то третий не исчезнет ? (возможно, это не так)
+ * bug: when the figure is at the lowest row and its footprint covers other figures, when we begin to rotate, that other figure disappears
  * - у некоторых фигурок _очень_ блеклые цвета
  * - timerdelay меньше 200 - нереально, надо как-то плавненько подводить и тормозить на уровне 150-200
  * - можно ли добавить звук?
